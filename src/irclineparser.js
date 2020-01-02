@@ -1,7 +1,7 @@
 'use strict';
 
-var MessageTags = require('./messagetags');
-var IrcMessage = require('./ircmessage');
+const MessageTags = require('./messagetags');
+const IrcMessage = require('./ircmessage');
 
 module.exports = parseIrcLine;
 
@@ -10,18 +10,18 @@ module.exports = parseIrcLine;
  * Deviates from the RFC a little to support the '/' character now used in some
  * IRCds
  */
-var parse_regex = /^(?:@([^ ]+) )?(?::((?:(?:([^\s!@]+)(?:!([^\s@]+))?)@)?(\S+)) )?((?:[a-zA-Z]+)|(?:[0-9]{3}))(?: ([^:].*?))?(?: :(.*))?$/i;
-var newline_regex = /^[\r\n]+|[\r\n]+$/g;
+const parse_regex = /^(?:@([^ ]+) )?(?::((?:(?:([^\s!@]+)(?:!([^\s@]+))?)@)?(\S+)) )?((?:[a-zA-Z]+)|(?:[0-9]{3}))(?: ([^:].*?))?(?: :(.*))?$/i;
+const newline_regex = /^[\r\n]+|[\r\n]+$/g;
 
 function parseIrcLine(line) {
     // Parse the complete line, removing any carriage returns
-    let matches = parse_regex.exec(line.replace(newline_regex, ''));
+    const matches = parse_regex.exec(line.replace(newline_regex, ''));
     if (!matches) {
         // The line was not parsed correctly, must be malformed
         return;
     }
 
-    let msg = new IrcMessage();
+    const msg = new IrcMessage();
 
     if (matches[1]) {
         msg.tags = MessageTags.decode(matches[1]);
